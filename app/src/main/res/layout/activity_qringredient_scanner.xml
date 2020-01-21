@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/layout_result"
-            android:layout_alignLeft="@+id/layout_result"
             android:gravity="center"
             android:text="..."
             android:textColor="@android:color/white"
