@@ -17,9 +17,9 @@
             android:layout_height="220dp"
             android:gravity="center"
             android:paddingTop="50dp"
-            android:text="Allergy Alert"
+            android:text="NutriLine"
             android:textSize="45sp"
-            android:background="#FADD2323"
+            android:background="#007600"
             android:textColor="@android:color/white"/>
 
         <LinearLayout

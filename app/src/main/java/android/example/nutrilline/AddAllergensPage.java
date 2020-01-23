@@ -1,5 +1,6 @@
 package android.example.nutrilline;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -7,86 +8,190 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 public class AddAllergensPage extends AppCompatActivity {
 
-    private RelativeLayout scrollViewRelativeLayout;
-    private static int textIncrementalID;
-    private static int buttonIncrementalID;
+    LinearLayout manNutrition;
+
+    private EditText ageText;
+    private EditText weightText;
+    private EditText heightFeetText;
+    private EditText heightInchesText;
+
+    private RadioGroup genderRadioGroup;
+    private RadioButton genderRadioButton;
+
+    private CheckBox checkManual;
+
+    private EditText calorieText;
+    private EditText fatText;
+    private EditText fiberText;
+    private EditText sodiumText;
+    private EditText proteinText;
+
+    private int age;
+    private int weight;
+    private int heightFeet;
+    private int heightInches;
+    String gender;
+
+    private int calorie;
+    private int fat;
+    private int fiber;
+    private int sodium;
+    private int protein;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
+
+    private int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_allergens_page);
 
-        scrollViewRelativeLayout = (RelativeLayout) findViewById(R.id.scrollViewRelativeLayout);
-        textIncrementalID = 1;
-        buttonIncrementalID = 2000;
+        ageText = findViewById(R.id.ageNumber);
+        weightText = findViewById(R.id.weightNumber);
+        heightFeetText = findViewById(R.id.heightNumberFeet);
+        heightInchesText = findViewById(R.id.heightNumberInches);
+
+        genderRadioGroup = findViewById(R.id.radio_group);
+
+        checkManual = findViewById(R.id.manualFillNutrition);
+
+        calorieText = findViewById(R.id.maxCalories);
+        fatText = findViewById(R.id.maxFat);
+        fiberText = findViewById(R.id.maxFiber);
+        sodiumText = findViewById(R.id.maxSodium);
+        proteinText = findViewById(R.id.maxProtein);
+
+        manNutrition = findViewById(R.id.manualNutritionInput);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
-    public void onClickDoneButton(View view){
+    public void saveSettingsClick(View v)
+    {
+        setOriginalValues1();
+        try {age = Integer.parseInt(ageText.getText().toString());} catch (Exception e){e.printStackTrace();}
+        try {weight = Integer.parseInt(weightText.getText().toString());} catch (Exception e){e.printStackTrace();}
+        try {
+            heightFeet = Integer.parseInt(heightFeetText.getText().toString());
+            heightInches = Integer.parseInt(heightInchesText.getText().toString());
+            if((heightFeet > 7) || (heightInches > 12)) { throw new Exception();}
+            height = (heightFeet * 12) + heightInches;
+        }
+        catch (Exception e){e.printStackTrace();}
+        try {
+            int genderNum = genderRadioGroup.getCheckedRadioButtonId();
+            genderRadioButton = findViewById(genderNum);
+            gender = genderRadioButton.getText().toString();
+        } catch (Exception e){e.printStackTrace();}
+        if(checkManual.isChecked())
+        {
+            try {calorie = Integer.parseInt(calorieText.getText().toString());} catch (Exception e){e.printStackTrace();}
+            try {fat = Integer.parseInt(fatText.getText().toString());} catch (Exception e){e.printStackTrace();}
+            try {fiber = Integer.parseInt(fiberText.getText().toString());} catch (Exception e){e.printStackTrace();}
+            try {sodium = Integer.parseInt(sodiumText.getText().toString());} catch (Exception e){e.printStackTrace();}
+            try {protein = Integer.parseInt(proteinText.getText().toString());} catch (Exception e){e.printStackTrace();}
+        }
+        fillDatabase();
+        Toast.makeText(this, "User settings saved!", Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 
-    public void onClickAddButton(View view){
-        Spinner spinner = (Spinner) findViewById(R.id.allergenListSpinner);
-        String text = spinner.getSelectedItem().toString();
+    public void setOriginalValues1()
+    {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        //Create the Button
-        Button button = new Button(this);
-        Resources res = this.getResources();
-        Drawable image = ResourcesCompat.getDrawable(res, R.drawable.delete,null);
-        Drawable image2 = ResourcesCompat.getDrawable(res, R.drawable.black_rectangle_stroke,null);
-        button.setBackground(image);
-        button.setForeground(image2);
-        button.setId(this.buttonIncrementalID);
-        button.setWidth(convertDPtoPixels(10));
-        button.setHeight(convertDPtoPixels(10));
-        RelativeLayout.LayoutParams paramsButton = new RelativeLayout.LayoutParams(convertDPtoPixels(30), convertDPtoPixels(30));
-        paramsButton.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        if(buttonIncrementalID == 2000){
-            paramsButton.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            paramsButton.setMargins(convertDPtoPixels(8),convertDPtoPixels(8),convertDPtoPixels(8),convertDPtoPixels(8));
-        }
-        else{
-            paramsButton.addRule(RelativeLayout.BELOW, this.buttonIncrementalID-1);
-            paramsButton.setMargins(convertDPtoPixels(8),0,convertDPtoPixels(8),convertDPtoPixels(8));
-        }
-        scrollViewRelativeLayout.addView(button, paramsButton);
-        this.buttonIncrementalID++;
+        final DocumentReference docRef = db.collection("users").document(user.getUid());
+        // Source can be CACHE, SERVER, or DEFAULT.
+        Source source = Source.SERVER;
+        // Get the document, forcing the SDK to use the offline cache
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Map<String, Object> dataMap = document.getData();
+                    setOriginalValues2(dataMap);
+                }
+            }
+        });
 
-
-        //Create the textView
-        TextView textView = new TextView(this);
-        textView.setText(text);
-        textView.setTextSize(20);
-        textView.setId(this.textIncrementalID);
-        RelativeLayout.LayoutParams paramsText = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsText.addRule(RelativeLayout.RIGHT_OF, this.buttonIncrementalID-1);
-        if(textIncrementalID ==1){
-            paramsText.setMargins(convertDPtoPixels(8),convertDPtoPixels(8),convertDPtoPixels(8),convertDPtoPixels(8));
-            paramsText.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        }
-        else{
-            paramsText.setMargins(convertDPtoPixels(8),0,convertDPtoPixels(8),convertDPtoPixels(8));
-            paramsButton.addRule(RelativeLayout.BELOW, this.textIncrementalID-1);
-            paramsText.addRule(RelativeLayout.BELOW, this.buttonIncrementalID-2);
-        }
-        scrollViewRelativeLayout.addView(textView, paramsText);
-        this.textIncrementalID++;
-        Toast.makeText(this, text.trim()+" Added!", Toast.LENGTH_SHORT).show();
     }
 
-    public int convertDPtoPixels(int dp){
-        Resources r = getResources();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,r.getDisplayMetrics());
+    public void setOriginalValues2(Map<String, Object> dataMap)
+    {
+        age = (int)((long)dataMap.get("Age"));
+        weight = (int)((long)dataMap.get("Weight"));
+        height = (int)((long)dataMap.get("Height"));
+        gender = (String)dataMap.get("Gender");
+
+        ArrayList<Long> maxIntakes= (ArrayList<Long>)dataMap.get("Max Intakes");
+
+        calorie = (int)((long)maxIntakes.get(0));
+        fat = (int)((long)maxIntakes.get(1));
+        fiber = (int)((long)maxIntakes.get(2));
+        sodium = (int)((long)maxIntakes.get(3));
+        protein = (int)((long)maxIntakes.get(4));
+    }
+
+    public void fillDatabase()
+    {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String userID = user.getUid();
+        DocumentReference df = db.collection("users").document(userID);
+
+        df.update("Age", age);
+        df.update("Weight", weight);
+        df.update("Height", height);
+        df.update("Gender", gender);
+
+        df.update("Max Intakes", Arrays.asList(calorie, fat, fiber, sodium, protein));
+    }
+
+    public void setManualVisibility(View v)
+    {
+        if(checkManual.isChecked())
+        {
+            manNutrition.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            manNutrition.setVisibility(View.INVISIBLE);
+        }
     }
 }

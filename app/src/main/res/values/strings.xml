@@ -2,7 +2,7 @@
     <string name="app_name">NutrilLine</string>
     <string name="Add_allergens_Title">ADD FOOD ALLERGENS</string>
     <string name="Add_Allergens_title2">Add Ingredients that you are allergic to</string>
-    <string name="HomePageTitle">Allergy Alert</string>
+    <string name="HomePageTitle">NutrilLine</string>
     <string name="scanButtonText">Scan Barcode</string>
     <string name="dining_Location_Button">Dining Locations</string>
     <string name="campus_dining_Button">Campus Dining</string>

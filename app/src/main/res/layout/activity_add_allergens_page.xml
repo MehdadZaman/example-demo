@@ -1,95 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddAllergensPage">
-
-    <TextView
-        android:id="@+id/textViewTitle1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FADD2323"
-        android:paddingTop="8dp"
-        android:text="@string/Add_allergens_Title"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:id="@+id/textViewTitle2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FADD2323"
-        android:paddingBottom="8dp"
-        android:text="@string/Add_Allergens_title2"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_below="@id/textViewTitle1" />
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/SpinnerLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTitle2"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/settingsPageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Settings"
+            android:textSize="45sp"
+            android:background="#007600"
+            android:textColor="@android:color/white"/>
 
-        <Spinner
-            android:id="@+id/allergenListSpinner"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/black_rectangle_stroke"
-            android:entries="@array/allergen_List"
-            android:spinnerMode="dropdown" />
+
+        <LinearLayout
+            android:id="@+id/userInfoSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/settingsPageTitle"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="User Information"
+                android:layout_gravity="center"
+                android:textSize="24sp"/>
+            <!--Age-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:paddingLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Age: "
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ageNumber"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="34dp"
+                    android:inputType="number"
+                    android:maxLength="3" />
+            </LinearLayout>
+            <!--Weight-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/black"
+                    android:text="Weight: "
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/weightNumber"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="3" />
+            </LinearLayout>
+            <!--Height -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="Height: "
+                    android:textSize="20sp" />
+                <!--Height (feet) -->
+                <EditText
+                    android:id="@+id/heightNumberFeet"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ft."
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"/>
+                <!--Height (inches) -->
+                <EditText
+                    android:id="@+id/heightNumberInches"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="in."
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+            <!--Gender-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Gender: "
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp">
+                    <RadioButton
+                        android:id="@+id/radio_button1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:text="Male" />
+                    <RadioButton
+                        android:id="@+id/radio_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:text="Female" />
+                    <RadioButton
+                        android:id="@+id/radio_button3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:text="Other" />
+                </RadioGroup>
+            </LinearLayout>
+            <CheckBox
+                android:id="@+id/manualFillNutrition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Input maximum daily intakes manually"
+                android:textColor="@android:color/darker_gray"
+                android:onClick="setManualVisibility"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manualNutritionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/userInfoSettings"
+            android:gravity="center"
+            android:visibility="visible">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:padding="2dp"
+                android:text="Daily Maximum Nutritional Values"
+                android:layout_gravity="center"
+                android:textSize="24sp"/>
+
+            <!--Calories-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Calories: "
+                    android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/maxCalories"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="4" />
+            </LinearLayout>
+
+            <!--Fat-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/black"
+                    android:text="Fat: "
+                    android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/maxFat"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="4" />
+            </LinearLayout>
+
+            <!--Fiber-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="5dp"
+                    android:text="Fiber: "
+                    android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/maxFiber"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="4" />
+            </LinearLayout>
+
+            <!--Sodium-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/black"
+                    android:text="Sodium: "
+                    android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/maxSodium"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="4" />
+            </LinearLayout>
+
+            <!--Protein-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Protein: "
+                    android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/maxProtein"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    android:maxLength="3" />
+            </LinearLayout>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/addButton"
+            android:id="@+id/button_start_quiz"
+            android:onClick="saveSettingsClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="8dp"
-            android:background="#FADD2323"
-            android:onClick="onClickAddButton"
-            android:text="@string/add_Button_Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/manualNutritionInput"
+            android:text="Save" />
 
-    <Button
-        android:id="@+id/doneButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SpinnerLinearLayout"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="32dp"
-        android:background="#FADD2323"
-        android:onClick="onClickDoneButton"
-        android:text="@string/Done_Adding_Button"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/doneButton">
-
-        <RelativeLayout
-            android:id="@+id/scrollViewRelativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </RelativeLayout>
-    </ScrollView>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

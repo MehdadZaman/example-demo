@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -156,9 +158,22 @@ public class SignUpPage extends AppCompatActivity {
     public void addUserToDataBase()
     {
         Map<String, Object> userData = new HashMap<>();
-        userData.put("Name", nameStr);
+
         userData.put("Email", emailStr);
-        userData.put("Food Allergies", Arrays.asList("Food Allergies"));
+        userData.put("Name", nameStr);
+        userData.put("Age", 30);
+        userData.put("Weight", 150);
+        userData.put("Height", 65);
+        userData.put("Gender", "Other");
+        userData.put("First Login", true);
+
+        //{Calorie, Fat, Fiber, Sodium, Protein}
+        ArrayList<Integer> maxIntakes = new ArrayList<>(Arrays.asList(2000, 1500, 1500, 1500, 1500));
+        ArrayList<Integer> currentDailyIntakes = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
+
+        userData.put("Max Intakes", maxIntakes);
+        userData.put("Current Daily Intakes", currentDailyIntakes);
+
         db.collection("users").document(mAuth.getCurrentUser().getUid()).set(userData);
     }
 
