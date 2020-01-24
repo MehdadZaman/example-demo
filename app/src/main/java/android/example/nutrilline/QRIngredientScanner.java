@@ -57,7 +57,7 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
 
-    HashSet<String> ingredientSet;
+    int[] nutritionIntegers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,11 +105,11 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
 
     public void processRawResult(String s) {
         s = s.toLowerCase();
-        if(s.startsWith("ingredients"))
+        if(s.startsWith("nutritional information:"))
         {
-            String ingredients = s.substring(s.indexOf('\n') + 1);
+            String nutritionalNumbers = s.substring(s.indexOf('\n') + 1);
             txtResult.setText("Valid QR Code");
-            processIngredients(ingredients);
+            processIngredients(nutritionalNumbers);
         }
         else
         {
@@ -118,15 +118,21 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
         }
     }
 
-    public void processIngredients(String ingredients)
+    public void processIngredients(String nutritionalNumbers)
     {
-        String[] ingredientList = ingredients.split(",");
+        String[] nutritionList = nutritionalNumbers.split(",");
         //Weird cases below
         //String[] ingredientList = ingredients.split("[^a-zA-Z \n]");
-        for(int i = 0; i < ingredientList.length; i++) {
-            ingredientList[i] = ingredientList[i].trim();
+        for(int i = 0; i < nutritionList.length; i++) {
+            nutritionList[i] = nutritionList[i].trim();
         }
-        ingredientSet = new HashSet<>(Arrays.asList(ingredientList));
+        nutritionIntegers = new int[nutritionList.length];
+        try{
+            for(int i = 0; i < nutritionList.length; i++)
+            {
+                nutritionIntegers[i] = Integer.parseInt(nutritionList[i]);
+            }
+        }catch (Exception e){e.printStackTrace();}
         FirebaseUser user = firebaseAuth.getCurrentUser();
         final DocumentReference docRef = db.collection("users").document(user.getUid());
         // Source can be CACHE, SERVER, or DEFAULT.
@@ -138,33 +144,23 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Map<String, Object> dataMap = document.getData();
-                    ArrayList<String> allergies = (ArrayList<String>)document.get("Food Allergies");
-                    processIngredients2(allergies);
+                    ArrayList<Long> numbers = (ArrayList<Long>)document.get("Current Daily Intakes");
+                    processIngredients2(numbers);
                 }
             }
         });
     }
 
-    public void processIngredients2(ArrayList<String> allergies)
+    public void processIngredients2(ArrayList<Long> nutNums)
     {
-        boolean allergyAlert = false;
-        ArrayList<String> listOfAllergies = new ArrayList<>();
-        for(int i = 0; i < allergies.size(); i++)
+        for(int i = 0; i < nutritionIntegers.length; i++)
         {
-            if(ingredientSet.contains(allergies.get(i)))
-            {
-                listOfAllergies.add(allergies.get(i));
-                allergyAlert = true;
-            }
+            nutNums.set(i, (nutNums.get(i) + (int)((long)nutritionIntegers[i])));
         }
-        if(allergyAlert)
-        {
-            showDialogueAllergyAlert(listOfAllergies);
-        }
-        else
-        {
-            showDialogueNoAllergies();
-        }
+
+        DocumentReference df = db.collection("users").document(firebaseAuth.getCurrentUser().getUid());
+        df.update("Current Daily Intakes", nutNums);
+        showDialogueNutritionAdded();
     }
 
     public void showDialogueInvalidQRCode()
@@ -186,37 +182,10 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
         builder.create().show();
     }
 
-    public void showDialogueAllergyAlert(ArrayList<String> arrayOfAllergies)
-    {
-        String allergenListStr = "";
-        for(int i = 0; i < arrayOfAllergies.size(); i++)
-        {
-            if(i == (arrayOfAllergies.size() - 1))
-                allergenListStr += arrayOfAllergies.get(i);
-            else
-                allergenListStr += arrayOfAllergies.get(i) + ", ";
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(QRIngredientScanner.this);
-        builder.setMessage("ALLERGY ALERT\nDangerous ingredients: " + allergenListStr)
-                .setPositiveButton("Scan New Code", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, QRIngredientScanner.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("Return Home", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, HomePage.class);
-                        startActivity(intent);
-                    }
-                });
-        builder.create().show();
-    }
-
-    public void showDialogueNoAllergies()
+    public void showDialogueNutritionAdded()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(QRIngredientScanner.this);
-        builder.setMessage("No Allergies Found")
+        builder.setMessage("Nutritional Information Added")
                 .setPositiveButton("Scan New Code", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(QRIngredientScanner.this, QRIngredientScanner.class);

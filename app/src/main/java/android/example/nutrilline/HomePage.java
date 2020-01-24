@@ -98,5 +98,8 @@ public class HomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void manualPageClick(View v){
+        Intent intent = new Intent(this, ManualNutitionAdditionPage.class);
+        startActivity(intent);
+    }
 }

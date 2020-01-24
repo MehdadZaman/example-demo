@@ -79,7 +79,7 @@
             android:onClick="addAllergiesClick"/>
 
         <Button
-            android:id="@+id/CampusDiningButton"
+            android:id="@+id/manualInputHomePage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/AddAllergensButton"
@@ -89,15 +89,16 @@
             android:layout_marginRight="32dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:background="#009d00"
-            android:text="@string/campus_dining_Button"
+            android:text="Add Meal Nutrition Manually"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="manualPageClick"/>
 
         <Button
             android:id="@+id/supportButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/CampusDiningButton"
+            android:layout_below="@+id/manualInputHomePage"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"

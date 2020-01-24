@@ -98,11 +98,12 @@ public class AddAllergensPage extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        setOriginalValues1();
     }
 
     public void saveSettingsClick(View v)
     {
-        setOriginalValues1();
         try {age = Integer.parseInt(ageText.getText().toString());} catch (Exception e){e.printStackTrace();}
         try {weight = Integer.parseInt(weightText.getText().toString());} catch (Exception e){e.printStackTrace();}
         try {
@@ -115,7 +116,8 @@ public class AddAllergensPage extends AppCompatActivity {
         try {
             int genderNum = genderRadioGroup.getCheckedRadioButtonId();
             genderRadioButton = findViewById(genderNum);
-            gender = genderRadioButton.getText().toString();
+            if(genderRadioButton != null)
+                gender = genderRadioButton.getText().toString();
         } catch (Exception e){e.printStackTrace();}
         if(checkManual.isChecked())
         {
@@ -151,7 +153,6 @@ public class AddAllergensPage extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public void setOriginalValues2(Map<String, Object> dataMap)
@@ -200,7 +201,6 @@ public class AddAllergensPage extends AppCompatActivity {
             else if((!gender.equals("Male")) && (age <= 30)) calorie = 1800;
             else if((!gender.equals("Male")) && (age <= 50)) calorie = 1000;
             else if((!gender.equals("Male"))) calorie = 1600;
-
         }
 
         if(fat == 0)
