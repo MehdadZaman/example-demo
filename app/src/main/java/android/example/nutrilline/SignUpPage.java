@@ -168,7 +168,7 @@ public class SignUpPage extends AppCompatActivity {
         userData.put("First Login", true);
 
         //{Calorie, Fat, Fiber, Sodium, Protein}
-        ArrayList<Integer> maxIntakes = new ArrayList<>(Arrays.asList(2000, 1500, 1500, 1500, 1500));
+        ArrayList<Integer> maxIntakes = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
         ArrayList<Integer> currentDailyIntakes = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
 
         userData.put("Max Intakes", maxIntakes);

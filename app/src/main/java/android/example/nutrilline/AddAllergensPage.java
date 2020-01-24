@@ -125,6 +125,7 @@ public class AddAllergensPage extends AppCompatActivity {
             try {sodium = Integer.parseInt(sodiumText.getText().toString());} catch (Exception e){e.printStackTrace();}
             try {protein = Integer.parseInt(proteinText.getText().toString());} catch (Exception e){e.printStackTrace();}
         }
+        autoFillNutrition();
         fillDatabase();
         Toast.makeText(this, "User settings saved!", Toast.LENGTH_SHORT).show();
 
@@ -181,6 +182,68 @@ public class AddAllergensPage extends AppCompatActivity {
         df.update("Gender", gender);
 
         df.update("Max Intakes", Arrays.asList(calorie, fat, fiber, sodium, protein));
+    }
+
+    public void autoFillNutrition()
+    {
+        if(calorie == 0)
+        {
+            if((gender.equals("Male")) && (age <= 3)) calorie = 1000;
+            else if((gender.equals("Male")) && (age <= 8)) calorie = 1500;
+            else if((gender.equals("Male")) && (age <= 13)) calorie = 1800;
+            else if((gender.equals("Male")) && (age <= 30)) calorie = 2600;
+            else if((gender.equals("Male")) && (age <= 50)) calorie = 2200;
+            else if((gender.equals("Male"))) calorie = 2000;
+            else if((!gender.equals("Male")) && (age <= 3)) calorie = 1000;
+            else if((!gender.equals("Male")) && (age <= 8)) calorie = 1200;
+            else if((!gender.equals("Male")) && (age <= 13)) calorie = 1600;
+            else if((!gender.equals("Male")) && (age <= 30)) calorie = 1800;
+            else if((!gender.equals("Male")) && (age <= 50)) calorie = 1000;
+            else if((!gender.equals("Male"))) calorie = 1600;
+
+        }
+
+        if(fat == 0)
+        {
+            fat = 30;
+        }
+
+        if(fiber == 0)
+        {
+            if((gender.equals("Male")) && (age <= 3)) fiber = 14;
+            else if((gender.equals("Male")) && (age <= 8)) fiber = 20;
+            else if((gender.equals("Male")) && (age <= 13)) fiber = 25;
+            else if((gender.equals("Male")) && (age <= 30)) fiber = 34;
+            else if((gender.equals("Male")) && (age <= 50)) fiber = 31;
+            else if((gender.equals("Male"))) fiber = 38;
+            else if((!gender.equals("Male")) && (age <= 3)) fiber = 14;
+            else if((!gender.equals("Male")) && (age <= 8)) fiber = 17;
+            else if((!gender.equals("Male")) && (age <= 13)) fiber = 22;
+            else if((!gender.equals("Male")) && (age <= 30)) fiber = 28;
+            else if((!gender.equals("Male")) && (age <= 50)) fiber = 25;
+            else if((!gender.equals("Male"))) fiber = 22;
+        }
+
+        if(sodium == 0)
+        {
+            if(age <= 3) sodium = 1500;
+            else if(age <= 8) sodium = 1900;
+            else if(age <= 13) sodium = 2200;
+            else fiber = 2300;
+        }
+
+        if(protein == 0)
+        {
+            if((gender.equals("Male")) && (age <= 3)) protein = 13;
+            else if((gender.equals("Male")) && (age <= 8)) protein = 19;
+            else if((gender.equals("Male")) && (age <= 13)) protein = 34;
+            else if((gender.equals("Male")) && (age <= 30)) protein = 52;
+            else if((gender.equals("Male"))) protein = 56;
+            else if((!gender.equals("Male")) && (age <= 3)) protein = 13;
+            else if((!gender.equals("Male")) && (age <= 8)) protein = 19;
+            else if((!gender.equals("Male")) && (age <= 13)) protein = 34;
+            else if((!gender.equals("Male"))) protein = 46;
+        }
     }
 
     public void setManualVisibility(View v)

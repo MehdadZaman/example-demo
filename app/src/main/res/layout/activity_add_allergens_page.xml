@@ -182,7 +182,7 @@
             android:orientation="vertical"
             android:layout_below="@+id/userInfoSettings"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="invisible">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -212,6 +212,14 @@
                     android:layout_marginLeft="10dp"
                     android:inputType="number"
                     android:maxLength="4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="calories"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
             <!--Fat-->
@@ -234,6 +242,14 @@
                     android:layout_marginLeft="10dp"
                     android:inputType="number"
                     android:maxLength="4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="kilocalories"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
             <!--Fiber-->
@@ -256,6 +272,14 @@
                     android:layout_marginLeft="10dp"
                     android:inputType="number"
                     android:maxLength="4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="grams"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
             <!--Sodium-->
@@ -278,6 +302,14 @@
                     android:layout_marginLeft="10dp"
                     android:inputType="number"
                     android:maxLength="4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="milligrams"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
             <!--Protein-->
@@ -300,8 +332,27 @@
                     android:layout_marginLeft="10dp"
                     android:inputType="number"
                     android:maxLength="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="grams"
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"/>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/resetInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="If you want your nutritional values to be auto-filled and you are
+            not a new user, check the manual input box and set all values to 0. Then click save"
+            android:layout_below="@+id/manualNutritionInput"
+            android:gravity="center"
+            android:textColor="@android:color/black"/>
 
         <Button
             android:id="@+id/button_start_quiz"
@@ -309,7 +360,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/manualNutritionInput"
+            android:layout_below="@+id/resetInfo"
             android:text="Save" />
 
     </RelativeLayout>
