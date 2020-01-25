@@ -18,9 +18,9 @@
             android:background="#007600"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Past Nutritional Logs"
+            android:text="Nutritional Logs"
             android:textColor="@android:color/white"
-            android:textSize="40sp" />
+            android:textSize="35sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_below="@+id/lineLog7"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -68,7 +68,7 @@
                 android:layout_below="@+id/lineLog6"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -95,7 +95,7 @@
                 android:layout_below="@+id/lineLog5"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -122,7 +122,7 @@
                 android:layout_below="@+id/lineLog4"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -149,7 +149,7 @@
                 android:layout_below="@+id/lineLog3"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="35sp" />
+                android:textSize="25sp" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

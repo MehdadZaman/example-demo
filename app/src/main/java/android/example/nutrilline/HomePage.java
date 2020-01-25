@@ -123,6 +123,11 @@ public class HomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void allNutritionalLogsClick(View v){
+        Intent intent = new Intent(this, AllNutritionalLogsPage.class);
+        startActivity(intent);
+    }
+
     public void checkOverFlow()
     {
         final DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getUid());

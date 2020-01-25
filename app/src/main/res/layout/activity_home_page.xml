@@ -93,7 +93,7 @@
             android:layout_marginRight="32dp"
             android:background="#009d00 "
             android:text="All Nutritional Logs"
-            android:onClick="onClickEmergencyCall"
+            android:onClick="allNutritionalLogsClick"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
