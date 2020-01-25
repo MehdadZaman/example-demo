@@ -8,18 +8,30 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity {
+
+    Button dailyInatakesButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -45,6 +57,9 @@ public class HomePage extends AppCompatActivity {
         {
             emailView.setText("user not available");
         }
+
+        dailyInatakesButton = findViewById(R.id.dailyIntake);
+        checkOverFlow();
     }
 
     public void onClickEmergencyCall(View view){
@@ -106,5 +121,42 @@ public class HomePage extends AppCompatActivity {
     public void goToMessagePage(View v){
         Intent intent = new Intent(this, MessagesPage.class);
         startActivity(intent);
+    }
+
+    public void checkOverFlow()
+    {
+        final DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getUid());
+        // Source can be CACHE, SERVER, or DEFAULT.
+        Source source = Source.SERVER;
+        // Get the document, forcing the SDK to use the offline cache
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Map<String, Object> dataMap = document.getData();
+                    ArrayList<Long> dailyIntakes = (ArrayList<Long>) dataMap.get("Current Daily Intakes");
+                    ArrayList<Long> maxIntakes = (ArrayList<Long>) dataMap.get("Max Intakes");
+                    compareValues(maxIntakes, dailyIntakes);
+                }
+            }
+        });
+    }
+
+    public void compareValues(ArrayList<Long> maxIntakes, ArrayList<Long> dailyIntakes)
+    {
+        boolean setRed = false;
+        for(int i = 0; i < maxIntakes.size(); i++)
+        {
+            if((maxIntakes.get(i) != 0) && (dailyIntakes.get(i) >= maxIntakes.get(i)))
+            {
+                setRed = true;
+            }
+        }
+
+        if(setRed)
+        {
+            dailyInatakesButton.setBackgroundColor(Color.RED);
+        }
     }
 }

@@ -285,7 +285,8 @@
         android:layout_margin="20dp"
         android:onClick="backToHomeMessages"
         android:layout_marginTop="50dp"
-        android:text="Back Home" />
+        android:text="Back Home"
+        android:layout_gravity="right"/>
 
 </LinearLayout>
     </ScrollView>
