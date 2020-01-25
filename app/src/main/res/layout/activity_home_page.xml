@@ -24,18 +24,6 @@
             android:textSize="32sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/profileButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/profile1"
-            android:padding="8dp"
-            tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="85dp" />
-
         <ImageView
             android:id="@+id/SeaWolf_Image"
             android:layout_width="80dp"
@@ -63,26 +51,10 @@
             android:onClick="gotoQRScanner"/>
 
         <Button
-            android:id="@+id/AddAllergensButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ScanButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="32dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="#009d00"
-            android:text="Add Allergies"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:onClick="addAllergiesClick"/>
-
-        <Button
             android:id="@+id/manualInputHomePage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/AddAllergensButton"
+            android:layout_below="@+id/ScanButton"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
@@ -95,17 +67,49 @@
             android:onClick="manualPageClick"/>
 
         <Button
-            android:id="@+id/supportButton"
+            android:id="@+id/dailyIntake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/manualInputHomePage"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/manualInputHomePage"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:background="#009d00"
-            android:text="@string/supportButton"
+            android:text="Current Nutritional Intakes"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/allNutritionalLogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dailyIntake"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="32dp"
+            android:background="#009d00 "
+            android:text="All Nutritional Logs"
+            android:onClick="onClickEmergencyCall"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/messagesHomePage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/allNutritionalLogs"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="32dp"
+            android:background="#009d00"
+            android:onClick="goToMessagePage"
+            android:text="Messages"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -113,23 +117,39 @@
             android:id="@+id/emergencyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/supportButton"
+            android:layout_below="@+id/messagesHomePage"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
             android:background="#009d00 "
-            android:text="@string/Emergency_Call_Button"
+            android:text="Call Doctor"
             android:onClick="onClickEmergencyCall"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_below="@+id/emergencyButton"
+            android:layout_marginRight="32dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#009d00"
+            android:text="Settings"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:onClick="addAllergiesClick"/>
+
+        <Button
             android:id="@+id/logoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/emergencyButton"
+            android:layout_below="@+id/settingsButton"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="48dp"

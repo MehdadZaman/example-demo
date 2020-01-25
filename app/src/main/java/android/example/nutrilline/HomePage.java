@@ -102,4 +102,9 @@ public class HomePage extends AppCompatActivity {
         Intent intent = new Intent(this, ManualNutitionAdditionPage.class);
         startActivity(intent);
     }
+
+    public void goToMessagePage(View v){
+        Intent intent = new Intent(this, MessagesPage.class);
+        startActivity(intent);
+    }
 }

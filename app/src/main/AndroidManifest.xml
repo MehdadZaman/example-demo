@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ManualNutitionAdditionPage"></activity>
+        <activity android:name=".OneMessagePage"></activity>
+        <activity android:name=".MessagesPage" />
+        <activity android:name=".ManualNutitionAdditionPage" />
         <activity android:name=".QRIngredientScanner" />
         <activity
             android:name=".ResetPasswordPage"
