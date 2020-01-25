@@ -9,7 +9,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -69,13 +68,13 @@ public class HomePage extends AppCompatActivity {
 
     public void addAllergiesClick(View view)
     {
-        Intent intent = new Intent(this, AddAllergensPage.class);
+        Intent intent = new Intent(this, SettingsPage.class);
         startActivity(intent);
     }
 
     public void gotoQRScanner(View view)
     {
-        Intent intent = new Intent(this, QRIngredientScanner.class);
+        Intent intent = new Intent(this, QRNutritionScanner.class);
         startActivity(intent);
     }
 
@@ -115,7 +114,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void manualPageClick(View v){
-        Intent intent = new Intent(this, ManualNutitionAdditionPage.class);
+        Intent intent = new Intent(this, ManualNutritionAdditionPage.class);
         startActivity(intent);
     }
 

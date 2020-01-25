@@ -141,7 +141,7 @@ public class LoginPage extends AppCompatActivity {
 
                             DocumentReference df = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             df.update("First Login", false);
-                            Intent intent = new Intent(LoginPage.this, AddAllergensPage.class);
+                            Intent intent = new Intent(LoginPage.this, SettingsPage.class);
                             startActivity(intent);
                         }
                         else

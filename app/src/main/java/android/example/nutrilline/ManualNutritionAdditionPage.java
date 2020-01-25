@@ -22,7 +22,7 @@ import com.google.firebase.firestore.Source;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ManualNutitionAdditionPage extends AppCompatActivity {
+public class ManualNutritionAdditionPage extends AppCompatActivity {
 
     private EditText calorieText;
     private EditText fatText;
@@ -44,7 +44,7 @@ public class ManualNutitionAdditionPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manual_nutition_addition_page);
+        setContentView(R.layout.activity_manual_nutrition_addition_page);
 
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -109,17 +109,17 @@ public class ManualNutitionAdditionPage extends AppCompatActivity {
 
     public void showDialogueNutritionAdded()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ManualNutitionAdditionPage.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ManualNutritionAdditionPage.this);
         builder.setMessage("Nutritional Information Added")
                 .setPositiveButton("Add Another Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(ManualNutitionAdditionPage.this, ManualNutitionAdditionPage.class);
+                        Intent intent = new Intent(ManualNutritionAdditionPage.this, ManualNutritionAdditionPage.class);
                         startActivity(intent);
                     }
                 })
                 .setNegativeButton("Return Home", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(ManualNutitionAdditionPage.this, HomePage.class);
+                        Intent intent = new Intent(ManualNutritionAdditionPage.this, HomePage.class);
                         startActivity(intent);
                     }
                 });

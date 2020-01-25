@@ -3,24 +3,16 @@ package android.example.nutrilline;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 //import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +20,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
-import com.google.firebase.firestore.auth.User;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -37,19 +28,14 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.app.PendingIntent.getActivity;
 
-public class QRIngredientScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class QRNutritionScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView scannerView;
     private TextView txtResult;
@@ -62,7 +48,7 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qringredient_scanner);
+        setContentView(R.layout.activity_qrnutrition_scanner);
 
         scannerView = findViewById(R.id.zxscan);
         txtResult = findViewById(R.id.txt_result);
@@ -76,13 +62,13 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
 
-                        scannerView.setResultHandler(QRIngredientScanner.this);
+                        scannerView.setResultHandler(QRNutritionScanner.this);
                         scannerView.startCamera();
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(QRIngredientScanner.this, "You must accept this permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QRNutritionScanner.this, "You must accept this permission", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -165,17 +151,17 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
 
     public void showDialogueInvalidQRCode()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(QRIngredientScanner.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(QRNutritionScanner.this);
         builder.setMessage("Invalid QR Code")
                 .setPositiveButton("Scan New Code", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, QRIngredientScanner.class);
+                        Intent intent = new Intent(QRNutritionScanner.this, QRNutritionScanner.class);
                         startActivity(intent);
                     }
                 })
                 .setNegativeButton("Return Home", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, HomePage.class);
+                        Intent intent = new Intent(QRNutritionScanner.this, HomePage.class);
                         startActivity(intent);
                     }
                 });
@@ -184,17 +170,17 @@ public class QRIngredientScanner extends AppCompatActivity implements ZXingScann
 
     public void showDialogueNutritionAdded()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(QRIngredientScanner.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(QRNutritionScanner.this);
         builder.setMessage("Nutritional Information Added")
                 .setPositiveButton("Scan New Code", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, QRIngredientScanner.class);
+                        Intent intent = new Intent(QRNutritionScanner.this, QRNutritionScanner.class);
                         startActivity(intent);
                     }
                 })
                 .setNegativeButton("Return Home", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(QRIngredientScanner.this, HomePage.class);
+                        Intent intent = new Intent(QRNutritionScanner.this, HomePage.class);
                         startActivity(intent);
                     }
                 });
