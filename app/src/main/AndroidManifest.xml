@@ -14,17 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllNutritionalLogsPage"/>
+        <activity android:name=".CurrentNutritionalIntakesPage"></activity>
+        <activity android:name=".AllNutritionalLogsPage" />
         <activity android:name=".OneMessagePage" />
         <activity android:name=".MessagesPage" />
         <activity android:name=".ManualNutritionAdditionPage" />
         <activity android:name=".QRNutritionScanner" />
         <activity android:name=".SettingsPage" />
-
         <activity
             android:name=".HomePage"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ResetPasswordPage"
             android:noHistory="true"
