@@ -3,8 +3,23 @@ package android.example.nutrilline;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +41,7 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
     private double fiberPercentage;
     private double sodiumPercentage;
     private double proteinPercentage;
+    private BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +50,7 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
         setIntakePercentages();
     }
 
@@ -61,23 +78,80 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
     {
         if(maxIntakes.get(0) !=  0)
         {
-            caloriePercentage = (((double)dailyIntakes.get(0))/maxIntakes.get(0));
+            caloriePercentage = (((double)dailyIntakes.get(0))/(double)maxIntakes.get(0))*100.0;
         }
         if(maxIntakes.get(1) !=  0)
         {
-            fatPercentage = (((double)dailyIntakes.get(1))/maxIntakes.get(1));
+            fatPercentage = (((double)dailyIntakes.get(1))/(double)maxIntakes.get(1))*100.0;
         }
         if(maxIntakes.get(2) !=  0)
         {
-            fiberPercentage = (((double)dailyIntakes.get(2))/maxIntakes.get(2));
+            fiberPercentage = (((double)dailyIntakes.get(2))/(double)maxIntakes.get(2))*100.0;
         }
         if(maxIntakes.get(3) !=  0)
         {
-            sodiumPercentage = (((double)dailyIntakes.get(3))/maxIntakes.get(3));
+            sodiumPercentage = (((double)dailyIntakes.get(3))/(double)maxIntakes.get(3))*100.0;
         }
         if(maxIntakes.get(4) !=  0)
         {
-            proteinPercentage = (((double)dailyIntakes.get(4))/maxIntakes.get(4));
+            proteinPercentage = (((double)dailyIntakes.get(4))/(double)maxIntakes.get(4))*100.0;
+        }
+
+        createBarGraph((float)caloriePercentage,(float)fatPercentage, (float)fiberPercentage, (float)sodiumPercentage, (float)proteinPercentage);
+    }
+
+    public void createBarGraph(float calorie, float fat, float fiber, float sodium, float protein){
+
+        barChart = (BarChart) findViewById(R.id.barChart);
+        Description description = barChart.getDescription();
+        description.setEnabled(false);
+
+        barChart.setDrawBarShadow(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.setMaxVisibleValueCount(50);
+        barChart.setPinchZoom(false);
+        barChart.setDrawGridBackground(true);
+        barChart.animateY(2000);
+
+        XAxis xAxis = barChart.getXAxis();
+        String[] calories = new String[]{"Calories","Fat","Fiber","Sodium","Protein"};
+        xAxis.setValueFormatter(new MyAxisValueFormatter(calories));
+        xAxis.setCenterAxisLabels(true);
+
+
+        YAxis yAxisLeft = barChart.getAxisLeft();
+        yAxisLeft.setAxisLineWidth(3);
+
+        YAxis yAxisRight = barChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(0f, calorie));
+        barEntries.add(new BarEntry(1f, fat));
+        barEntries.add(new BarEntry(2f, fiber));
+        barEntries.add(new BarEntry(3f, sodium));
+        barEntries.add(new BarEntry(4f, protein));
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Calories(%)");
+        barDataSet.setValueTextSize(10f);
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+
+        BarData data = new BarData(barDataSet);
+        data.setBarWidth(0.9f);
+
+        barChart.setData(data);
+    }
+
+    public class MyAxisValueFormatter extends ValueFormatter {
+        private String[] mvalues;
+        public MyAxisValueFormatter(String[] values){
+            this.mvalues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value) {
+            return mvalues[(int)value];
         }
     }
 }

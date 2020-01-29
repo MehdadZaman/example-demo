@@ -70,14 +70,15 @@
             android:id="@+id/dailyIntake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/manualInputHomePage"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:background="#009d00"
+            android:onClick="currentNutritionalIntakeClick"
             android:text="Current Nutritional Intakes"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 

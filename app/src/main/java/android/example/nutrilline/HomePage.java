@@ -165,4 +165,10 @@ public class HomePage extends AppCompatActivity {
             dailyInatakesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.alert_symbol, 0, R.drawable.alert_symbol, 0);
         }
     }
+
+    public void currentNutritionalIntakeClick(View v){
+
+        Intent intent = new Intent(this, CurrentNutritionalIntakesPage.class);
+        startActivity(intent);
+    }
 }
