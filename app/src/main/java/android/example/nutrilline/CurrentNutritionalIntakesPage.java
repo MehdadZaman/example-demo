@@ -4,9 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.icu.text.Transliterator;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -18,6 +17,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CurrentNutritionalIntakesPage extends AppCompatActivity {
@@ -52,6 +53,7 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         setIntakePercentages();
+
     }
 
     public void setIntakePercentages()
@@ -97,10 +99,10 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
             proteinPercentage = (((double)dailyIntakes.get(4))/(double)maxIntakes.get(4))*100.0;
         }
 
-        createBarGraph((float)caloriePercentage,(float)fatPercentage, (float)fiberPercentage, (float)sodiumPercentage, (float)proteinPercentage);
+        createBarGraph( caloriePercentage, fatPercentage, fiberPercentage, sodiumPercentage, proteinPercentage);
     }
 
-    public void createBarGraph(float calorie, float fat, float fiber, float sodium, float protein){
+    public void createBarGraph(double calorie, double fat, double fiber, double sodium, double protein){
 
         barChart = (BarChart) findViewById(R.id.barChart);
         Description description = barChart.getDescription();
@@ -110,13 +112,20 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         barChart.setDrawValueAboveBar(true);
         barChart.setMaxVisibleValueCount(50);
         barChart.setPinchZoom(false);
+        barChart.setScaleEnabled(false);
         barChart.setDrawGridBackground(true);
         barChart.animateY(2000);
 
         XAxis xAxis = barChart.getXAxis();
         String[] calories = new String[]{"Calories","Fat","Fiber","Sodium","Protein"};
-        xAxis.setValueFormatter(new MyAxisValueFormatter(calories));
-        xAxis.setCenterAxisLabels(true);
+        //xAxis.setValueFormatter(new MyAxisValueFormatter(calories));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(calories));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        //xAxis.setLabelCount(5);
+        //xAxis.setGranularityEnabled(true);
+        //xAxis.setGranularity(1f);
 
 
         YAxis yAxisLeft = barChart.getAxisLeft();
@@ -126,16 +135,47 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         yAxisRight.setEnabled(false);
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, calorie));
-        barEntries.add(new BarEntry(1f, fat));
-        barEntries.add(new BarEntry(2f, fiber));
-        barEntries.add(new BarEntry(3f, sodium));
-        barEntries.add(new BarEntry(4f, protein));
+        barEntries.add(new BarEntry(0f, (float) calorie));
+        barEntries.add(new BarEntry(1f, (float) fat));
+        barEntries.add(new BarEntry(2f, (float) fiber));
+        barEntries.add(new BarEntry(3f, (float) sodium));
+        barEntries.add(new BarEntry(4f, (float) protein));
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Calories(%)");
         barDataSet.setValueTextSize(10f);
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
+        List<Integer> colors = new  ArrayList<>();
+        if(calorie > 100){
+            colors.add(Color.RED);
+        }
+        else{
+            colors.add(Color.GREEN);
+        }
+        if(fat > 100){
+            colors.add(Color.RED);
+        }
+        else{
+            colors.add(Color.GREEN);
+        }
+        if(fiber > 100){
+            colors.add(Color.RED);
+        }
+        else{
+            colors.add(Color.GREEN);
+        }
+        if(sodium > 100){
+            colors.add(Color.RED);
+        }
+        else{
+            colors.add(Color.GREEN);
+        }
+        if(protein > 100){
+            colors.add(Color.RED);
+        }
+        else{
+            colors.add(Color.GREEN);
+        }
+        barDataSet.setColors(colors);
 
         BarData data = new BarData(barDataSet);
         data.setBarWidth(0.9f);
