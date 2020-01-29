@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -100,6 +101,7 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         }
 
         createBarGraph( caloriePercentage, fatPercentage, fiberPercentage, sodiumPercentage, proteinPercentage);
+        showWarningMessage(dailyIntakes, maxIntakes);
     }
 
     public void createBarGraph(double calorie, double fat, double fiber, double sodium, double protein){
@@ -118,15 +120,11 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
 
         XAxis xAxis = barChart.getXAxis();
         String[] calories = new String[]{"Calories","Fat","Fiber","Sodium","Protein"};
-        //xAxis.setValueFormatter(new MyAxisValueFormatter(calories));
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(1f);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(calories));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        //xAxis.setCenterAxisLabels(true);
         xAxis.setDrawGridLines(false);
-        //xAxis.setLabelCount(5);
-        //xAxis.setGranularityEnabled(true);
-        //xAxis.setGranularity(1f);
-
 
         YAxis yAxisLeft = barChart.getAxisLeft();
         yAxisLeft.setAxisLineWidth(3);
@@ -141,7 +139,7 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         barEntries.add(new BarEntry(3f, (float) sodium));
         barEntries.add(new BarEntry(4f, (float) protein));
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Calories(%)");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Percentage(%)");
         barDataSet.setValueTextSize(10f);
 
         List<Integer> colors = new  ArrayList<>();
@@ -183,15 +181,35 @@ public class CurrentNutritionalIntakesPage extends AppCompatActivity {
         barChart.setData(data);
     }
 
-    public class MyAxisValueFormatter extends ValueFormatter {
-        private String[] mvalues;
-        public MyAxisValueFormatter(String[] values){
-            this.mvalues = values;
+    public void showWarningMessage(ArrayList<Long> dailyIntakes, ArrayList<Long> maxIntakes){
+        boolean flag = false;
+        for(int i =0; i< dailyIntakes.size(); i++){
+            if(dailyIntakes.get(i)>maxIntakes.get(i)){
+                flag = true;
+                break;
+            }
+        }
+        String[] nutritions = new String[]{"Calories","Fat","Fiber","Sodium","Protein"};
+        String[] nutritions2 = new String[]{"Calories:","Fat     |","Fiber:   ","Sodium:  ","Protein: "};
+        String s= "";
+
+        if(flag == true){
+            for(int i =0; i< dailyIntakes.size(); i++){
+                if(dailyIntakes.get(i)>maxIntakes.get(i)){
+                    s+= String.format("Warning: You have exceeded your current limit of %s intake.\n",nutritions[i]);
+                }
+            }
+            TextView t = findViewById(R.id.warningDescription);
+            t.setText(s);
         }
 
-        @Override
-        public String getFormattedValue(float value) {
-            return mvalues[(int)value];
+        String s2 = String.format("%25s %-20s %-10s\n","","Current","Limit");
+        TextView t1 = findViewById(R.id.description);
+        for(int j =0; j< dailyIntakes.size(); j++){
+            s2+= String.format("%s %-20d %-10d\n", nutritions2[j]+ ":", (int)((long)dailyIntakes.get(j)), (int)((long)maxIntakes.get(j)));
         }
+        t1.setText(s2);
     }
+
+
 }
