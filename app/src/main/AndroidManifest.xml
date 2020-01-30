@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CurrentNutritionalIntakesPage"></activity>
+        <activity android:name=".DailyLogPage"></activity>
+        <activity android:name=".CurrentNutritionalIntakesPage" />
         <activity android:name=".AllNutritionalLogsPage" />
         <activity android:name=".OneMessagePage" />
         <activity android:name=".MessagesPage" />
