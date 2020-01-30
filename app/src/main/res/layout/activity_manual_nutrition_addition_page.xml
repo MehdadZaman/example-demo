@@ -16,8 +16,8 @@
             android:layout_height="100dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Settings"
-            android:textSize="45sp"
+            android:text="Add Meal Nutrition"
+            android:textSize="32sp"
             android:background="#007600"
             android:textColor="@android:color/white"/>
 
