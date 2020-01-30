@@ -46,8 +46,7 @@ public class AllNutritionalLogsPage extends AppCompatActivity {
     }
 
     public void backToHomeLogs(View v){
-        Intent intent = new Intent(this, DailyLogPage.class);
-        intent.putExtra("Nutritional Numbers", new double[]{1, 1.02, .97, 1.1, 1.12});
+        Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 }
