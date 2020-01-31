@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class HomePage extends AppCompatActivity {
 
-    Button dailyInatakesButton;
+    Button dailyIntakesButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -58,7 +58,7 @@ public class HomePage extends AppCompatActivity {
             emailView.setText("user not available");
         }
 
-        dailyInatakesButton = findViewById(R.id.dailyIntake);
+        dailyIntakesButton = findViewById(R.id.dailyIntake);
         checkOverFlow();
     }
 
@@ -111,6 +111,7 @@ public class HomePage extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
+        finish();
     }
 
     public void manualPageClick(View v){
@@ -161,8 +162,8 @@ public class HomePage extends AppCompatActivity {
 
         if(setRed)
         {
-            dailyInatakesButton.setBackgroundColor(Color.RED);
-            dailyInatakesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.alert_symbol, 0, R.drawable.alert_symbol, 0);
+            dailyIntakesButton.setBackgroundColor(Color.RED);
+            dailyIntakesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.alert_symbol, 0, R.drawable.alert_symbol, 0);
         }
     }
 
