@@ -190,10 +190,10 @@ public class DailyLogPage extends AppCompatActivity {
             }
         }
         String[] nutritions = new String[]{"Calories","Fat","Fiber","Sodium","Protein"};
-        String[] nutritions2 = new String[]{"Calories:","Fat     |","Fiber:   ","Sodium:  ","Protein: "};
+        String[] nutritionalUnits = new String[]{"cal.","kcal","g","mg","g"};
         String s= "";
 
-        if(flag == true){
+        if(flag){
             for(int i =0; i< dailyIntakes.size(); i++){
                 if(dailyIntakes.get(i)>maxIntakes.get(i)){
                     s+= String.format("Warning: You have exceeded your current limit of %s intake.\n",nutritions[i]);
@@ -203,13 +203,18 @@ public class DailyLogPage extends AppCompatActivity {
             t.setText(s);
         }
 
-        String s2 = String.format("%25s %-20s %-10s\n","","Current","Limit");
-        TextView t1 = findViewById(R.id.description2);
+        String s1 = "Consumed:\n"; //String.format("%25s %-20s %-10s\n","","Current","Limit");
+        String s2 = "Maximum:\n"; //String.format("%25s %-20s %-10s\n","","Current","Limit");
+        TextView t1 = findViewById(R.id.currentNumberIntakes2);
+        TextView t2 = findViewById(R.id.dailyNumberIntakes2);
         for(int j =0; j< dailyIntakes.size(); j++){
-            s2+= String.format("%s %-20d %-10d\n", nutritions2[j]+ ":", (int)((long)dailyIntakes.get(j)), (int)((long)maxIntakes.get(j)));
+            s1 += "" + (int)((long)dailyIntakes.get(j)) + nutritionalUnits[j] +"\n";
+            s2 += "" + (int)((long)maxIntakes.get(j)) + nutritionalUnits[j] +"\n";
+
+            //s2+= String.format("%s %-20d %-10d\n", nutritions2[j]+ ":", (int)((long)dailyIntakes.get(j)), (int)((long)maxIntakes.get(j)));
         }
-        t1.setText(s2);
+        t1.setText(s1);
+        t2.setText(s2);
+
     }
-
-
 }
