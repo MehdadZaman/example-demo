@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePage">
+    tools:context=".NutritionistHomePage">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/nutritionistHomePageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#007600"
@@ -24,153 +23,102 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/SeaWolf_Image"
+            android:id="@+id/SeaWolf_Image2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/textView"
+            android:layout_below="@+id/nutritionistHomePageTitle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="1dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/index" />
 
         <Button
-            android:id="@+id/ScanButton"
+            android:id="@+id/Patients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/SeaWolf_Image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="32dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="#009d00"
-            android:text="@string/scanButtonText"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:onClick="gotoQRScanner"/>
-
-        <Button
-            android:id="@+id/manualInputHomePage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ScanButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="32dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="#009d00"
-            android:text="Add Meal Nutrition Manually"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:onClick="manualPageClick"/>
-
-        <Button
-            android:id="@+id/dailyIntake"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/manualInputHomePage"
+            android:layout_below="@+id/SeaWolf_Image2"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
             android:background="#009d00"
-            android:onClick="currentNutritionalIntakeClick"
-            android:text="Current Nutritional Intakes"
+            android:onClick="onClickPatientsButton"
+            android:text="@string/PatientsButtonText"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
-
-
         <Button
-            android:id="@+id/allNutritionalLogs"
+            android:id="@+id/notifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dailyIntake"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="32dp"
-            android:background="#009d00 "
-            android:text="All Nutritional Logs"
-            android:onClick="allNutritionalLogsClick"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/messagesHomePage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/allNutritionalLogs"
+            android:layout_below="@+id/Patients"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
             android:background="#009d00"
-            android:onClick="goToMessagePage"
-            android:text="Messages"
+            android:onClick="onClickPatientsButton"
+            android:text="Notifications"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
-
         <Button
-            android:id="@+id/emergencyButton"
+            android:id="@+id/manageProfileButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/messagesHomePage"
+            android:layout_below="@+id/notifications"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginRight="32dp"
-            android:background="#009d00 "
-            android:text="Call Doctor"
-            android:onClick="onClickEmergencyCall"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/settingsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_below="@+id/emergencyButton"
-            android:layout_marginRight="32dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:background="#009d00"
-            android:text="Settings"
+            android:onClick="onClickPatientsButton"
+            android:text="Manage Profile"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:onClick="addAllergiesClick"/>
-
+            android:textStyle="bold" />
         <Button
-            android:id="@+id/logoutButton"
+            android:id="@+id/verifyAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/manageProfileButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="32dp"
+            android:background="#009d00"
+            android:onClick="onClickPatientsButton"
+            android:text="Verify Account"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/NutritionistlogoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/settingsButton"
+            android:layout_below="@+id/verifyAccountButton"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="48dp"
             android:layout_marginRight="32dp"
             android:background="@color/common_google_signin_btn_text_light_default"
             android:text="Logout"
-            android:onClick="onClickLogout"
+            android:onClick="onClickLogout2"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/emailHomePage"
+            android:id="@+id/emailHomePage2"
+            android:text="email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logoutButton"
+            android:layout_below="@+id/NutritionistlogoutButton"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="48dp"
             android:layout_marginRight="32dp"
-            android:text="email" />
+            />
     </RelativeLayout>
+
 </ScrollView>

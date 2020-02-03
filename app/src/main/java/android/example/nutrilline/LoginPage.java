@@ -91,9 +91,15 @@ public class LoginPage extends AppCompatActivity {
     }
 
     public void resumeSession() {
-        if(mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(LoginPage.this, HomePage.class);
-            startActivity(intent);
+        try{
+            String s = mAuth.getCurrentUser().getUid();
+            if(mAuth.getCurrentUser() != null) {
+                Intent intent = new Intent(LoginPage.this, HomePage.class);
+                startActivity(intent);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 

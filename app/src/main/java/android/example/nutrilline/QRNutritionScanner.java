@@ -6,8 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 //import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +36,8 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.util.ArrayList;
 import java.util.Map;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.app.PendingIntent.getActivity;
@@ -130,14 +137,15 @@ public class QRNutritionScanner extends AppCompatActivity implements ZXingScanne
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Map<String, Object> dataMap = document.getData();
-                    ArrayList<Long> numbers = (ArrayList<Long>)document.get("Current Daily Intakes");
-                    processIngredients2(numbers);
+                    ArrayList<Long> numbers = (ArrayList<Long>)dataMap.get("Current Daily Intakes");
+                    ArrayList<Long> maxIntakes = (ArrayList<Long>) dataMap.get("Max Intakes");
+                    processIngredients2(numbers, maxIntakes);
                 }
             }
         });
     }
 
-    public void processIngredients2(ArrayList<Long> nutNums)
+    public void processIngredients2(ArrayList<Long> nutNums, ArrayList<Long> maxIntakes)
     {
         for(int i = 0; i < nutritionIntegers.length; i++)
         {
@@ -146,7 +154,7 @@ public class QRNutritionScanner extends AppCompatActivity implements ZXingScanne
 
         DocumentReference df = db.collection("users").document(firebaseAuth.getCurrentUser().getUid());
         df.update("Current Daily Intakes", nutNums);
-        showDialogueNutritionAdded();
+        showDialogueNutritionAdded(nutNums, maxIntakes);
     }
 
     public void showDialogueInvalidQRCode()
@@ -168,8 +176,9 @@ public class QRNutritionScanner extends AppCompatActivity implements ZXingScanne
         builder.create().show();
     }
 
-    public void showDialogueNutritionAdded()
+    public void showDialogueNutritionAdded(ArrayList<Long> nutNums, ArrayList<Long> maxIntakes)
     {
+        PopNotificationWarning(nutNums, maxIntakes);
         AlertDialog.Builder builder = new AlertDialog.Builder(QRNutritionScanner.this);
         builder.setMessage("Nutritional Information Added")
                 .setPositiveButton("Scan New Code", new DialogInterface.OnClickListener() {
@@ -185,5 +194,43 @@ public class QRNutritionScanner extends AppCompatActivity implements ZXingScanne
                     }
                 });
         builder.create().show();
+    }
+
+    public void PopNotificationWarning(ArrayList<Long> nutNums, ArrayList<Long> maxIntakes){
+        String s="";
+        boolean flag= false;
+        for(int i =0; i< nutNums.size(); i++){
+            if(nutNums.get(i)>maxIntakes.get(i)){
+                s ="You have exceeded one of your nutrition's current maximum limit.";
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag == true){
+            NotificationCompat.Builder builder;
+
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                String CHANNEL_ID = "my_channel_01";
+                CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID,name,importance);
+                manager.createNotificationChannel(mChannel);
+                builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+            }
+            else{
+                builder = new NotificationCompat.Builder(this);
+            }
+            builder.setSmallIcon(R.drawable.alert_symbol)
+                    .setContentTitle("NutriLine")
+                    .setContentText(s)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(s));
+            Intent notificationIntent = new Intent(this, CurrentNutritionalIntakesPage.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,0,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+            manager.notify(0, builder.build());
+        }
     }
 }

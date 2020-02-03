@@ -14,14 +14,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DailyLogPage"></activity>
-        <activity android:name=".CurrentNutritionalIntakesPage" />
-        <activity android:name=".AllNutritionalLogsPage" />
-        <activity android:name=".OneMessagePage" />
-        <activity android:name=".MessagesPage" />
-        <activity android:name=".ManualNutritionAdditionPage" />
-        <activity android:name=".QRNutritionScanner" />
-        <activity android:name=".SettingsPage" />
+        <activity android:name=".NutritionistLogInPage"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".NutritionistHomePage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MultiLoginPage"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DailyLogPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CurrentNutritionalIntakesPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AllNutritionalLogsPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".OneMessagePage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MessagesPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ManualNutritionAdditionPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QRNutritionScanner"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SettingsPage"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomePage"
             android:screenOrientation="portrait" />
@@ -41,11 +61,6 @@
             android:name=".LoginPage"
             android:noHistory="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

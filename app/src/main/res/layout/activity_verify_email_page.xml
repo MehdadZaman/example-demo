@@ -12,9 +12,9 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="100dp"
             android:gravity="center"
-            android:paddingTop="50dp"
+            android:padding="10dp"
             android:text="NutriLine"
             android:textSize="45sp"
             android:background="#007600"

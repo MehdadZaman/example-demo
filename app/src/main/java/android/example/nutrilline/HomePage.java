@@ -111,6 +111,7 @@ public class HomePage extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
+        ActivityCompat.finishAffinity(this);
     }
 
     public void manualPageClick(View v){
