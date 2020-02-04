@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +36,9 @@ public class LoginPage extends AppCompatActivity {
     private String emailStr;
     private String passwordStr;
 
+    String visionText = "";
+    String uniqueID = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,17 @@ public class LoginPage extends AppCompatActivity {
         incorrectCredentials = findViewById(R.id.incorrectCredentials);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        //getIntent
+        try {
+            visionText = getIntent().getStringExtra("VisionText");
+            uniqueID = getIntent().getStringExtra("UniqueID");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
         resumeSession();
     }
 
@@ -94,7 +109,9 @@ public class LoginPage extends AppCompatActivity {
         try {
             String s = mAuth.getCurrentUser().getUid();
             if (mAuth.getCurrentUser() != null) {
-                Intent intent = new Intent(LoginPage.this, HomePage.class);
+                Intent intent = new Intent(this, HomePage.class);
+                intent.putExtra("VisionText", visionText);
+                intent.putExtra("UniqueID", uniqueID);
                 startActivity(intent);
             }
         }
