@@ -180,7 +180,7 @@ public class HomePage extends AppCompatActivity {
 
         if(setRed)
         {
-            dailyInatakesButton.setBackgroundColor(Color.RED);
+            dailyInatakesButton.setBackgroundResource(R.drawable.rounded_corner_button2);
             dailyInatakesButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.alert_symbol, 0, R.drawable.alert_symbol, 0);
         }
     }
