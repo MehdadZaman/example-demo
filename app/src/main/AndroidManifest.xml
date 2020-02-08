@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllNutritionalLogsDoctorPage"></activity>
+        <activity android:name=".DoctorSetMaxIntakesPage"></activity>
+        <activity android:name=".AllNutritionalLogsDoctorPage" />
         <activity android:name=".DailyLogPage2" />
         <activity
             android:name=".SendEmailPage"
