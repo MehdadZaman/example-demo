@@ -43,4 +43,9 @@ public class AllNutritionalLogsDoctorPage extends AppCompatActivity {
         Intent intent = new Intent(this, PatientsListPage.class);
         startActivity(intent);
     }
+
+    public void onClickSetMax(View view){
+        Intent intent = new Intent(this, DoctorSetMaxIntakesPage.class);
+        startActivity(intent);
+    }
 }
