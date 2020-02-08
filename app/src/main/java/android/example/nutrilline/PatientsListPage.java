@@ -20,8 +20,14 @@ public class PatientsListPage extends AppCompatActivity {
     }
 
     public void goToEmail(View view){
-        Intent intent = new Intent(this, SendEmailPage.class);
-        startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/html");
+        intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+        intent.putExtra(Intent.EXTRA_TEXT, "");
+        startActivity(Intent.createChooser(intent, "Send Email"));
+        /*Intent intent = new Intent(this, SendEmailPage.class);
+        startActivity(intent);*/
     }
 
     public void backToDoctorHome(View view){
