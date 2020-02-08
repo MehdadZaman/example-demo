@@ -14,11 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NutritionistLogInPage"
+        <activity android:name=".SendEmailPage"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".NutritionistHomePage"
+        <activity android:name=".PatientsListPage"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MultiLoginPage"
+        <activity
+            android:name=".NutritionistLogInPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NutritionistHomePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiLoginPage"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,22 +33,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DailyLogPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CurrentNutritionalIntakesPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AllNutritionalLogsPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OneMessagePage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MessagesPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ManualNutritionAdditionPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".QRNutritionScanner"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SettingsPage"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DailyLogPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CurrentNutritionalIntakesPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AllNutritionalLogsPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OneMessagePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MessagesPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ManualNutritionAdditionPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRNutritionScanner"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsPage"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomePage"
             android:screenOrientation="portrait" />
@@ -60,8 +75,7 @@
         <activity
             android:name=".LoginPage"
             android:noHistory="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -6,20 +6,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MultiLoginPage extends AppCompatActivity {
+public class PatientsListPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multi_login_page);
+        setContentView(R.layout.activity_patients_list_page);
     }
 
-    public void userLogInClick(View v){
-        Intent intent = new Intent(this, LoginPage.class);
+    public void goToPatient(View view){
+        Intent intent = new Intent(this, AllNutritionalLogsPage.class);
         startActivity(intent);
     }
 
-    public void nutritionistlogInClick(View v){
+    public void goToEmail(View view){
+        Intent intent = new Intent(this, SendEmailPage.class);
+        startActivity(intent);
+    }
+
+    public void backToDoctorHome(View view){
         Intent intent = new Intent(this, NutritionistHomePage.class);
         startActivity(intent);
     }

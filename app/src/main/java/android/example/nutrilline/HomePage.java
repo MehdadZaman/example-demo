@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,6 +33,8 @@ import java.util.Map;
 
 public class HomePage extends AppCompatActivity {
 
+    String visionText;
+    String uniqueID;
     Button dailyInatakesButton;
 
     private FirebaseAuth mAuth;
@@ -41,6 +45,8 @@ public class HomePage extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
 
     private TextView emailView;
+
+    int[] nutritionIntegers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,18 @@ public class HomePage extends AppCompatActivity {
         catch(Exception e)
         {
             emailView.setText("user not available");
+        }
+
+        try{
+            visionText = getIntent().getStringExtra("VisionText");
+            uniqueID = getIntent().getStringExtra("UniqueID");
+            if (uniqueID.equals("1234")){
+                parseText();
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
         dailyInatakesButton = findViewById(R.id.dailyIntake);
@@ -171,5 +189,66 @@ public class HomePage extends AppCompatActivity {
 
         Intent intent = new Intent(this, CurrentNutritionalIntakesPage.class);
         startActivity(intent);
+    }
+
+    public void incrementTextualVision(View v){
+        Intent intent = getPackageManager().getLaunchIntentForPackage("com.google.android.gms.samples.vision.ocrreader");
+        startActivity(intent);
+    }
+
+    public void parseText(){
+        visionText = visionText.toLowerCase();
+        String[] stringInts = visionText.split("[a-z]");
+        ArrayList<String> intList = new ArrayList<>();
+        for(int i = 0; i < stringInts.length; i++)
+        {
+            if(!TextUtils.isEmpty(stringInts[i]))
+            {
+                intList.add(stringInts[i]);
+            }
+        }
+        int[] integrs = new int[5];
+        for(int i = 0; i < intList.size(); i++) {
+            integrs[i] = Integer.parseInt(intList.get(i));
+        }
+
+        addToDatabase(integrs);
+        Toast.makeText(this, "Daily Intakes Updated!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void addToDatabase(int[] integrs)
+    {
+        nutritionIntegers = integrs;
+        processIngredientsHome();
+    }
+
+    public void processIngredientsHome()
+    {
+        FirebaseUser user = mAuth.getCurrentUser();
+        final DocumentReference docRef = db.collection("users").document(user.getUid());
+        // Source can be CACHE, SERVER, or DEFAULT.
+        Source source = Source.SERVER;
+        // Get the document, forcing the SDK to use the offline cache
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Map<String, Object> dataMap = document.getData();
+                    ArrayList<Long> numbers = (ArrayList<Long>)document.get("Current Daily Intakes");
+                    processIngredients2Home(numbers);
+                }
+            }
+        });
+    }
+
+    public void processIngredients2Home(ArrayList<Long> nutNums)
+    {
+        for(int i = 0; i < nutritionIntegers.length; i++)
+        {
+            nutNums.set(i, (nutNums.get(i) + (int)((long)nutritionIntegers[i])));
+        }
+        DocumentReference df = db.collection("users").document(mAuth.getCurrentUser().getUid());
+        df.update("Current Daily Intakes", nutNums);
     }
 }

@@ -28,7 +28,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
             android:onClick="userLogInClick"
-            android:text="Log in As User" />
+            android:text="Log in As User"
+            android:background="@drawable/rounded_corner_button"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/loginAsNutritionistButton"
@@ -38,7 +40,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:onClick="nutritionistlogInClick"
-            android:text="Log in As Nutritionist" />
+            android:text="Log in As Nutritionist"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_corner_button"/>
     </RelativeLayout>
 
 </ScrollView>
