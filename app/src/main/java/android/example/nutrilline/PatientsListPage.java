@@ -15,7 +15,7 @@ public class PatientsListPage extends AppCompatActivity {
     }
 
     public void goToPatient(View view){
-        Intent intent = new Intent(this, AllNutritionalLogsPage.class);
+        Intent intent = new Intent(this, AllNutritionalLogsDoctorPage.class);
         startActivity(intent);
     }
 
