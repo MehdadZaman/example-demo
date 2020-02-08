@@ -17,23 +17,14 @@ public class NutritionistHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutritionist_home_page);
-        mAuth = FirebaseAuth.getInstance();
-        emailView = findViewById(R.id.emailHomePage);
-        try {
-            emailView.setText(mAuth.getCurrentUser().getEmail().toString());
-        }
-        catch(Exception e)
-        {
-            emailView.setText("user not available");
-        }
     }
 
     public void onClickPatientsButton(View view){
-
+        Intent intent = new Intent(this, PatientsListPage.class);
+        startActivity(intent);
     }
     public void onClickLogout2(View v){
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this, LoginPage.class);
+        Intent intent = new Intent(this, MultiLoginPage.class);
         startActivity(intent);
     }
 }

@@ -107,18 +107,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/emailHomePage2"
-            android:text="email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/NutritionistlogoutButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginRight="32dp"
-            />
     </RelativeLayout>
 
 </ScrollView>

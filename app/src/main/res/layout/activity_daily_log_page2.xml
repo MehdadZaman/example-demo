@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SendEmailPage">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/gmail_screenshot"
-        android:scaleType="fitXY"></ImageView>
+    tools:context=".DailyLogPage2">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

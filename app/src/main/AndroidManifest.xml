@@ -14,10 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SendEmailPage"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".PatientsListPage"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".DailyLogPage2"></activity>
+        <activity
+            android:name=".SendEmailPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PatientsListPage"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NutritionistLogInPage"
             android:screenOrientation="portrait" />
