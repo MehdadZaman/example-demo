@@ -3,13 +3,19 @@ package android.example.nutrilline;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -214,6 +220,7 @@ public class HomePage extends AppCompatActivity {
 
         addToDatabase(integrs);
         Toast.makeText(this, "Daily Intakes Updated!", Toast.LENGTH_SHORT).show();
+
     }
 
     public void addToDatabase(int[] integrs)
@@ -236,13 +243,15 @@ public class HomePage extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     Map<String, Object> dataMap = document.getData();
                     ArrayList<Long> numbers = (ArrayList<Long>)document.get("Current Daily Intakes");
-                    processIngredients2Home(numbers);
+                    ArrayList<Long> maxNums = (ArrayList<Long>)document.get("Max Intakes");
+                    processIngredients2Home(numbers, maxNums);
+
                 }
             }
         });
     }
 
-    public void processIngredients2Home(ArrayList<Long> nutNums)
+    public void processIngredients2Home(ArrayList<Long> nutNums, ArrayList<Long> maxIntakes)
     {
         for(int i = 0; i < nutritionIntegers.length; i++)
         {
@@ -250,5 +259,45 @@ public class HomePage extends AppCompatActivity {
         }
         DocumentReference df = db.collection("users").document(mAuth.getCurrentUser().getUid());
         df.update("Current Daily Intakes", nutNums);
+
+        PopNotificationWarning(nutNums, maxIntakes);
+    }
+
+    public void PopNotificationWarning(ArrayList<Long> nutNums, ArrayList<Long> maxIntakes){
+        String s="";
+        boolean flag= false;
+        for(int i =0; i< nutNums.size(); i++){
+            if(nutNums.get(i)>maxIntakes.get(i)){
+                s ="You have exceeded one of your nutrition's current maximum limit.";
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag == true){
+            NotificationCompat.Builder builder;
+
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                String CHANNEL_ID = "my_channel_01";
+                CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID,name,importance);
+                manager.createNotificationChannel(mChannel);
+                builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+            }
+            else{
+                builder = new NotificationCompat.Builder(this);
+            }
+            builder.setSmallIcon(R.drawable.alert_symbol)
+                    .setContentTitle("NutriLine")
+                    .setContentText(s)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(s));
+            Intent notificationIntent = new Intent(this, CurrentNutritionalIntakesPage.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,0,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+            manager.notify(0, builder.build());
+        }
     }
 }
